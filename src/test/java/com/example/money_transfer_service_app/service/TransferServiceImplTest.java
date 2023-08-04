@@ -16,7 +16,7 @@ import java.math.RoundingMode;
 
 import java.util.Map;
 
-public class TransferServiceImpTest {
+public class TransferServiceImplTest {
 
     TransferRepositoryImpl cardRepositoryImplMock = Mockito.mock(TransferRepositoryImpl.class);
     Map<String, DataOperation> operationsRepositoryMock = Mockito.mock(Map.class);
