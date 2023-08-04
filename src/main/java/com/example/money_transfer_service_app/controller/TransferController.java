@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 @RestController
 public class TransferController {
 
-    private final TransferService transferService;//D
+    private final TransferService transferService;
 
     private final Logger log = Logger.getLogger("Controller_Success");
 
