@@ -1,0 +1,7 @@
+version: "1.0"
+
+services:
+  back:
+    image: back-transfer
+    ports:
+      - "5500:5500"
