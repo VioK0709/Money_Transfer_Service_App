@@ -1,13 +1,10 @@
 package com.example.money_transfer_service_app.service;
 
 import com.example.money_transfer_service_app.exception.ErrorConfirmation;
-import com.example.money_transfer_service_app.exception.ErrorInputData;
 import com.example.money_transfer_service_app.log.TransferLog;
 import com.example.money_transfer_service_app.model.DataOperation;
 import com.example.money_transfer_service_app.model.DataTransfer;
-import com.example.money_transfer_service_app.model.Verification;
 import com.example.money_transfer_service_app.repository.TransferRepository;
-import com.example.money_transfer_service_app.repository.TransferRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
@@ -35,36 +32,36 @@ public class TransferServiceImpl implements TransferService {
 
     @Override
     public String postTransfer(DataTransfer transferRequest) {
-        String operationId;
-        String cardValidTill = transferRequest.getCardFromValidTill();
-        if (TransferRepositoryImpl.validateCardDate(cardValidTill)) {
-            DataOperation newOperation = transferRepository.transfer(transferRequest);
-            if (newOperation != null) {
-                operationId = "000" + idNumber.getAndIncrement();
-                operationsRepository.put(operationId, newOperation);
-                verificationRepository.put(operationId, code);
-                TransferLog.createStringLog(operationId, newOperation);
-            } else { //или
-                log.info("Данные карты введены не верно");
-                throw new ErrorInputData("Данные карты введены не верно");
-            }
-        } else {
-            log.info("Срок действия карты истек");
-            throw new ErrorInputData("Срок действия карты истек");
-        }
+        String operationId = "000" + idNumber.getAndIncrement();
+        DataOperation newOperation = transferRepository.transfer(transferRequest);
+        operationsRepository.put(operationId, newOperation);
+        verificationRepository.put(operationId, code);
+        TransferLog.createStringLog(operationId, newOperation);
         return operationId;
     }
 
     @Override
     public String confirmOperation(Verification verification) {
         String operationId = verification.getOperationId();
-        if (this.code.equals(verification.getCode()))
-            return "Операция подтверждена";
-        if (verification.getOperationId() != null) {
+        if (verification.getOperationId() != null && this.code.equals(verification.getCode())) {
             return operationId;
         } else {
             log.info("Транзакция отклонена");
             throw new ErrorConfirmation("Транзакция отклонена");
         }
+    }
+}
+
+record Verification(String operationId, String code) {
+    public static boolean isCodeCorrect(String code) {
+        return (Integer.parseInt(code) > 1);
+    }
+
+    public String getOperationId() {
+        return operationId;
+    }
+
+    public String getCode() {
+        return code;
     }
 }

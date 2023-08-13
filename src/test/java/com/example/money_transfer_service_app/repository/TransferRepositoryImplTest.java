@@ -1,8 +1,8 @@
 package com.example.money_transfer_service_app.repository;
 
-import com.example.money_transfer_service_app.card.Amount;
-import com.example.money_transfer_service_app.card.AmountCard;
-import com.example.money_transfer_service_app.card.Card;
+import com.example.money_transfer_service_app.model.Amount;
+import com.example.money_transfer_service_app.model.DataOperation.*;
+import com.example.money_transfer_service_app.model.Card;
 import com.example.money_transfer_service_app.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

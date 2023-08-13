@@ -1,24 +1,27 @@
 package com.example.money_transfer_service_app.model;
 
-import com.example.money_transfer_service_app.card.Card;
-import lombok.*;
-
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@EqualsAndHashCode
-public class DataOperation {
+public record DataOperation(
+        Card cardFromNumber, String cardToNumber, BigDecimal transferValue, BigDecimal remains,
+        BigDecimal transferFee) {
+    public BigDecimal getTransferValue() {
+        return transferValue;
+    }
 
-    private Card cardFromNumber;
-    private String cardToNumber;
-    private BigDecimal transferValue;
-    private BigDecimal remains;
-    private BigDecimal transferFee;
-}
+    public BigDecimal getRemains() {
+        return remains;
+    }
 
-record DataOperationRecord(Card cardFromNumber, String cardToNumber,
-                           BigDecimal transferValue, BigDecimal remains,
-                           BigDecimal transferFee) {
+    public Card getCardFromNumber() {
+        return cardFromNumber;
+    }
+
+    public String getCardToNumber() {
+        return cardToNumber;
+    }
+
+    public BigDecimal getTransferFee() {
+        return transferFee;
+    }
 }

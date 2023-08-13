@@ -1,6 +1,5 @@
 package com.example.money_transfer_service_app.model;
 
-import com.example.money_transfer_service_app.card.Amount;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -29,9 +28,4 @@ public class DataTransfer {
     private String cardFromCVV;
 
     private Amount amount;
-}
-
-record DataTransferRecord(String cardFromNumber, String cardToNumber,
-                          String cardFromValidTill, String cardFromCVV,
-                          Amount amount) {
 }

@@ -3,7 +3,7 @@ package com.example.money_transfer_service_app;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.money_transfer_service_app.card.Card;
+import com.example.money_transfer_service_app.model.Card;
 import com.example.money_transfer_service_app.repository.TransferRepositoryImpl;
 
 import java.util.Map;

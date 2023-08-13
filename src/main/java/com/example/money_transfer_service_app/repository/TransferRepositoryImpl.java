@@ -1,8 +1,9 @@
 package com.example.money_transfer_service_app.repository;
 
+
 import com.example.money_transfer_service_app.exception.ErrorInputData;
-import com.example.money_transfer_service_app.card.AmountCard;
-import com.example.money_transfer_service_app.card.Card;
+import com.example.money_transfer_service_app.model.AmountCard;
+import com.example.money_transfer_service_app.model.Card;
 import com.example.money_transfer_service_app.model.DataOperation;
 import com.example.money_transfer_service_app.model.DataTransfer;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class TransferRepositoryImpl implements TransferRepository {
+
     public static Map<String, Card> cards = new ConcurrentHashMap<>();
 
     public TransferRepositoryImpl(Map<String, Card> cardsRepository) {
@@ -72,11 +74,11 @@ public class TransferRepositoryImpl implements TransferRepository {
         return false;
     }
 
-    public static DataOperation acceptData(Card currentCard, DataTransfer transferRequest) {//проверка данных для расчета
+    public static DataOperation acceptData(Card currentCard, DataTransfer transferRequest) {
         DataOperation newOperation;
         String cardToNumber = transferRequest.getCardToNumber();
-        if (!(currentCard.getCardFromNumber().equals(cardToNumber))//если номера карт разные, CVV разные, дата карты отпарвителя совпадает с той что есть в списке
-                && (currentCard.getCardFromCVV().equals(transferRequest.getCardFromCVV()))// то чистаем деньги для перевода
+        if (!(currentCard.getCardFromNumber().equals(cardToNumber))
+                && (currentCard.getCardFromCVV().equals(transferRequest.getCardFromCVV()))
                 && (currentCard.getCardFromValidTill().equals(transferRequest.getCardFromValidTill()))) {
             BigDecimal currentCardValue = currentCard.getAmount().getValue()
                     .setScale(2, RoundingMode.CEILING);
@@ -88,11 +90,11 @@ public class TransferRepositoryImpl implements TransferRepository {
             if (newValueCardFrom.compareTo(BigDecimal.valueOf(0.01)
                     .setScale(2, RoundingMode.CEILING)) > 0) {
                 newOperation = new DataOperation(currentCard, cardToNumber, transferValue, newValueCardFrom, sum);
-                return newOperation; //если все ок возвращаем все данные по операции
+                return newOperation;
             } else {
                 throw new ErrorInputData("Недостаточно средств");
             }
-        } else { //если одно из условий иф не соответ то
+        } else {
             throw new ErrorInputData("Ошибка ввода данных");
         }
     }

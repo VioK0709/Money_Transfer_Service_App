@@ -1,8 +1,8 @@
 package com.example.money_transfer_service_app.service;
 
-import com.example.money_transfer_service_app.card.Amount;
-import com.example.money_transfer_service_app.card.AmountCard;
-import com.example.money_transfer_service_app.card.Card;
+import com.example.money_transfer_service_app.model.Amount;
+import com.example.money_transfer_service_app.model.AmountCard;
+import com.example.money_transfer_service_app.model.Card;
 import com.example.money_transfer_service_app.model.*;
 import com.example.money_transfer_service_app.repository.TransferRepositoryImpl;
 import org.junit.Before;
@@ -20,9 +20,9 @@ public class TransferServiceImplTest {
 
     TransferRepositoryImpl cardRepositoryImplMock = Mockito.mock(TransferRepositoryImpl.class);
     Map<String, DataOperation> operationsRepositoryMock = Mockito.mock(Map.class);
-    Map<String, String> verificationRepositoryMock = Mockito.mock(Map.class);
+ Map<String, String> verificationRepositoryMock = Mockito.mock(Map.class);
 
-    TransferServiceImpl transferServiceImpl = new TransferServiceImpl(cardRepositoryImplMock, operationsRepositoryMock, verificationRepositoryMock);
+    TransferServiceImpl transferServiceImpl = new TransferServiceImpl(cardRepositoryImplMock);
 
 
     BigDecimal testCardValue = BigDecimal.valueOf(111_111.11);
@@ -70,8 +70,8 @@ public class TransferServiceImplTest {
 
     @Test
     void testConfirmService() {
-        mockConfirm();
-        Verification testVerification = new Verification(testOperationId,testCode);
+  //      mockConfirm();
+        Verification testVerification = new Verification(testOperationId, testCode);
         String result = transferServiceImpl.confirmOperation(testVerification);
         Assertions.assertEquals("0001", result);
     }
