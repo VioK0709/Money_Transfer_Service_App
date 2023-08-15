@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @AllArgsConstructor
 public class DataTransfer {
+
     @NotNull(message = "Необходимо ввести номер карты отправителя")
     @Size(min = 16, message = "Номер карты состоит из 16-и символов")
     private String cardFromNumber;

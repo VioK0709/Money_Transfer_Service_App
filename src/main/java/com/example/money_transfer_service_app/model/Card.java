@@ -1,7 +1,6 @@
 package com.example.money_transfer_service_app.model;
 
-public record Card(String cardFromNumber, String cardFromValidTill,
-                   String cardFromCVV, AmountCard amount) {
+public record Card(String cardFromNumber, String cardFromValidTill, String cardFromCVV, AmountCard amount) {
 
     public String printData() {
         return "номер карты: "
@@ -19,6 +18,7 @@ public record Card(String cardFromNumber, String cardFromValidTill,
 
     public void setAmount(AmountCard amount) {
     }
+
     public String getCardFromNumber() {
         return cardFromNumber;
     }

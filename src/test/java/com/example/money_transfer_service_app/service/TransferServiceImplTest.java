@@ -3,6 +3,7 @@ package com.example.money_transfer_service_app.service;
 import com.example.money_transfer_service_app.model.Amount;
 import com.example.money_transfer_service_app.model.AmountCard;
 import com.example.money_transfer_service_app.model.Card;
+import com.example.money_transfer_service_app.model.Verification;
 import com.example.money_transfer_service_app.model.*;
 import com.example.money_transfer_service_app.repository.TransferRepositoryImpl;
 import org.junit.Before;
@@ -20,7 +21,7 @@ public class TransferServiceImplTest {
 
     TransferRepositoryImpl cardRepositoryImplMock = Mockito.mock(TransferRepositoryImpl.class);
     Map<String, DataOperation> operationsRepositoryMock = Mockito.mock(Map.class);
- Map<String, String> verificationRepositoryMock = Mockito.mock(Map.class);
+    Map<String, String> verificationRepositoryMock = Mockito.mock(Map.class);
 
     TransferServiceImpl transferServiceImpl = new TransferServiceImpl(cardRepositoryImplMock);
 
@@ -41,7 +42,7 @@ public class TransferServiceImplTest {
     DataOperation testOperation = new DataOperation(testCardImpl, testCardToNumber, transferValue, newValueCardFrom, fee);
 
     String testOperationId = "0001";
-    String testCode = "2222";
+    String testCode = "0000";
 
     @BeforeEach
     public void mockBeforeEach() {
@@ -70,7 +71,7 @@ public class TransferServiceImplTest {
 
     @Test
     void testConfirmService() {
-  //      mockConfirm();
+        mockConfirm();
         Verification testVerification = new Verification(testOperationId, testCode);
         String result = transferServiceImpl.confirmOperation(testVerification);
         Assertions.assertEquals("0001", result);
